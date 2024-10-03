@@ -17,8 +17,6 @@
             left: 20px;
             font-family: 'Times New Roman', serif;
             font-size: 16px;
-            /* color: #333; */
-            /* background-color: rgba(255, 255, 255, 0.7); */
             padding: 10px;
             border-radius: 5px;
         }
@@ -40,22 +38,19 @@
         // Target date
         const targetDate = new Date(2019, 1, 7, 20, 0, 0);
 
-        // functions
         function setup() {
             pixelDensity(5)
-            randomColorNum = floor(random(light.length))
             createCanvas(windowWidth, windowHeight)
+            noLoop()
+            generateArt()
         }
 
         function draw() {
-            const now = new Date();
-            const difference = now - targetDate;
-            const years = difference / (1000 * 60 * 60 * 24 * 365);
+            // This function is intentionally left empty as we're using noLoop()
+        }
 
-            // Use the years elapsed to influence the artwork
-            padding = 125 + years * 10; // Border grows over time
-            randomSeed(floor(years * 365)); // Change seed daily
-
+        function generateArt() {
+            randomColorNum = floor(random(light.length))
             background(light[randomColorNum])
             stroke(dark1[randomColorNum])
             fill(dark1[randomColorNum])
@@ -68,12 +63,12 @@
             generateTree()
 
             // Update time elapsed
-            updateTimeElapsed(difference);
+            updateTimeElapsed()
         }
 
-
-
-        function updateTimeElapsed(difference) {
+        function updateTimeElapsed() {
+            const now = new Date();
+            const difference = now - targetDate;
             const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
             const months = Math.floor((difference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
             const days = Math.floor((difference % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
@@ -95,29 +90,22 @@
 
             // moon or sun
             if(moonOrSun > .5) {
-
                 // first part of the sun
                 fill(0, 0, 0, 0)
                 strokeWeight(sunBeamWith/3)
                 let sunFirstPart = random(75, 100)
                 let numLines1 = random(350, 450)
                 for (let i = 0; i < numLines1; i++) {
-
                     // calculate the angle for each line
                     let angle = i * TWO_PI / numLines1 
-
                     // random extension
                     let offsetEnd = random(25, 45)
-
                     // calculate the x-coordinate of the end point
                     let x = (sunFirstPart + offsetEnd) * cos(angle)
-
                     // calculate the y-coordinate of the end point  
                     let y = (sunFirstPart + offsetEnd) * sin(angle)
-
                     // draw
                     handDrawnLine(0, 0, x, y, .1)
-
                 }
 
                 // second part of the sun
@@ -128,22 +116,11 @@
                 strokeWeight(sunBeamWith/2)
                 let numLines2 = random(350, 450)
                 for (let i = 0; i < numLines2; i++) {
-
-                    // calculate the angle for each line
                     let angle = i * TWO_PI / numLines2 
-
-                    // random extension
                     let offsetEnd = random(10, 25)
-
-                    // calculate the x-coordinate of the end point
                     let x = (sunFirstPart + offsetEnd) * cos(angle)
-
-                    // calculate the y-coordinate of the end point  
                     let y = (sunFirstPart + offsetEnd) * sin(angle)
-
-                    // draw
                     handDrawnLine(0, 0, x, y, .1)
-
                 }
 
                 // third part of the sun
@@ -154,31 +131,18 @@
                 strokeWeight(sunBeamWith)
                 let numLines3 = random(250, 350)
                 for (let i = 0; i < numLines3; i++) {
-
-                    // calculate the angle for each line
                     let angle = i * TWO_PI / numLines3 
-
-                    // random extension
                     let offsetEnd = random(10, 25)
-
-                    // calculate the x-coordinate of the end point
                     let x = (sunFirstPart/1.5 + offsetEnd) * cos(angle)
-
-                    // calculate the y-coordinate of the end point  
                     let y = (sunFirstPart/1.5 + offsetEnd) * sin(angle)
-
-                    // draw
                     handDrawnLine(0, 0, x, y, .1)
-
                 }
 
                 // final
                 fill(light[randomColorNum])
                 strokeWeight(sunBeamWith * 1.5)
                 circle(0, 0, sunFirstPart / 1.5)
-
             } else {
-
                 // setup
                 strokeWeight(0)
                 let moonWidth = random(10, 12)
@@ -191,7 +155,6 @@
                 fill(light[randomColorNum])
                 arc(moonWidth, moonWidth, moonSizee, moonSizee, 0, PI*4)
                 pop()
-
             }
 
             pop()
@@ -327,12 +290,16 @@
 
         function mouseClicked(){
             // Regenerate the artwork instead of saving
-            redraw();
+            generateArt()
         }
 
         function windowResized() {
             resizeCanvas(windowWidth, windowHeight);
+            generateArt() // Regenerate when window is resized
         }
+
+        // Update time every second
+        setInterval(updateTimeElapsed, 1000);
     </script>
 </body>
 </html>
