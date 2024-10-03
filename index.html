@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Elapsed Since January 7th 2019</title>
+    <title>Time Elapsed Since February 7th 2019</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -29,14 +29,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Time Elapsed Since January 7th 2019 at 8:00 PM</h1>
+        <h1>Time Elapsed Since February 7th 2019 at 8:00 PM</h1>
         <p id="time-elapsed"></p>
     </div>
 
     <script>
         function updateTimeElapsed() {
             const now = new Date();
-            const targetDate = new Date(2019, 0, 7, 20, 0, 0);
+            const targetDate = new Date(2019, 1, 7, 20, 0, 0);
             const difference = now - targetDate;
 
             const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
