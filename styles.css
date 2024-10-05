@@ -25,3 +25,39 @@ body {
     text-decoration: none;
     border-bottom: 1px dotted;
 }
+
+.body_options { 
+    padding: 20px; 
+    font-family: Arial, sans-serif; 
+    max-width: 500px; 
+    margin: 0 auto; 
+}
+label { 
+    display: block; 
+    margin-top: 15px; 
+    font-weight: bold; 
+}
+input { 
+    width: 100%; 
+    padding: 8px; 
+    margin-top: 5px; 
+    box-sizing: border-box; 
+}
+button { 
+    margin-top: 20px; 
+    padding: 10px 15px; 
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 16px; 
+}
+button:hover {
+    background-color: #45a049;
+}
+#status {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}

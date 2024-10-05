@@ -26,8 +26,36 @@ const dark1 = [
 let randomColorNum;
 let padding = 125;
 
-// Target date
-const targetDate = new Date(2019, 1, 7, 14, 0, 0);
+// Custom message and target date
+let customMessage = "Time elapsed since 2pm February 7th 2019";
+let customTargetDate = new Date(2019, 1, 7, 14, 0, 0);
+
+// Function to get options from chrome.storage
+function getOptions(callback) {
+  chrome.storage.sync.get(
+    {
+      message: "Time elapsed since 2pm February 7th 2019",
+      targetDate: "2019-02-07 14:00:00",
+    },
+    function (items) {
+      callback(items.message, new Date(items.targetDate));
+    }
+  );
+}
+
+// Call getOptions at the start of your script
+getOptions(function (message, targetDate) {
+  console.log("Custom message:", message);
+  console.log("Target date:", targetDate);
+
+  // Update global variables
+  customMessage = message;
+  customTargetDate = targetDate;
+
+  // Initial generation of art and time update
+  generateArt();
+  updateTimeElapsed();
+});
 
 function setup() {
   pixelDensity(5);
@@ -59,7 +87,7 @@ function generateArt() {
 
 function updateTimeElapsed() {
   const now = new Date();
-  const difference = now - targetDate;
+  const difference = now - customTargetDate;
   const years = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
   const months = Math.floor(
     (difference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30)
@@ -75,6 +103,7 @@ function updateTimeElapsed() {
 
   const timeElapsed = `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
   document.getElementById("time-value").textContent = timeElapsed;
+  document.getElementById("message").textContent = customMessage;
 }
 
 function shiningObject() {
@@ -96,15 +125,10 @@ function shiningObject() {
     let sunFirstPart = random(75, 100);
     let numLines1 = random(350, 450);
     for (let i = 0; i < numLines1; i++) {
-      // calculate the angle for each line
       let angle = (i * TWO_PI) / numLines1;
-      // random extension
       let offsetEnd = random(25, 45);
-      // calculate the x-coordinate of the end point
       let x = (sunFirstPart + offsetEnd) * cos(angle);
-      // calculate the y-coordinate of the end point
       let y = (sunFirstPart + offsetEnd) * sin(angle);
-      // draw
       handDrawnLine(0, 0, x, y, 0.1);
     }
 
@@ -196,14 +220,10 @@ function branch(depth) {
   strokeWeight(5);
 
   if (depth < 12) {
-    // body of the tree (or branch)
     handDrawnLine(0, 0, 0, -height / 12, random(0.05, 0.1));
-
-    // continue
     translate(0, -height / 12);
     rotate(random(-0.05, 0.05));
 
-    // branching
     if (random() < 0.65) {
       rotate(0.3);
       scale(0.8);
@@ -225,8 +245,6 @@ function branch(depth) {
 
 function underGround(ground) {
   push();
-
-  // move horizontal line
   translate(0, -ground);
   fill(0, 0, 0, 0);
   strokeWeight(1.25);
@@ -254,18 +272,14 @@ function underGround(ground) {
       0.1
     );
   }
-
   pop();
 }
 
 function grassFlower(ground) {
   push();
-
-  // move horizontal line
   translate(0, -ground);
   fill(0, 0, 0, 0);
 
-  // grass
   strokeWeight(0.5);
   for (let x = 0; x < width; x += random(1.5)) {
     handDrawnLine(
@@ -277,7 +291,6 @@ function grassFlower(ground) {
     );
   }
 
-  // flowers
   strokeWeight(1);
   for (let x = 0; x < width; x += random(150)) {
     handDrawnFlower(
@@ -293,13 +306,11 @@ function grassFlower(ground) {
 }
 
 function borderMargin(pad) {
-  // margin
   noFill();
   stroke(light[randomColorNum]);
   strokeWeight(pad);
   rect(pad / 2, pad / 2, width - pad, height - pad);
 
-  // border
   const borderMargin = random(5, 25);
   stroke(dark1[randomColorNum]);
   strokeWeight(1);
@@ -342,13 +353,12 @@ function generateTree() {
 }
 
 function mouseClicked() {
-  // Regenerate the artwork instead of saving
   generateArt();
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  generateArt(); // Regenerate when window is resized
+  generateArt();
 }
 
 // Update time every second

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreeLapse Tab Options</title>
+    <link rel="stylesheet" href="styles.css">
+
+    </style>
+</head>
+<body class="body_options">
+    <h1>TreeLapse Tab Options</h1>
+    <form id="optionsForm">
+        <label for="message">Custom Message:</label>
+        <input type="text" id="message" name="message" required>
+        
+        <label for="date">Start Date (dd/mm/yyyy):</label>
+        <input type="date" id="date" name="date" required>
+        
+        <label for="time">Start Time:</label>
+        <input type="time" id="time" name="time" required>
+        
+        <button type="submit">Save</button>
+    </form>
+    <div id="status"></div>
+
+    <script src="options.js"></script>
+</body>
+</html>

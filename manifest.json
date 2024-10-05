@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "TreeLapse Tab",
+    "version": "1.0",
+    "description": "Redirects new tabs to a page with a pretty tree and the amount of time that's passed since a time of your choosing",
+    "permissions": [
+      "tabs",
+      "storage"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "chrome_url_overrides": {
+      "newtab": "index.html"
+    },
+    "options_page": "options.html",
+    "web_accessible_resources": [{
+      "resources": ["script.js", "styles.css", "p5.min.js"],
+      "matches": ["<all_urls>"]
+    }],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline'"
+    }
+  }
