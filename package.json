@@ -1,0 +1,9 @@
+{
+  "name": "tree-lapse-tab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generative art new tab page counting the time elapsed since 2pm, 7 February 2019.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
